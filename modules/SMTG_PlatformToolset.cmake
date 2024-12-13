@@ -83,7 +83,9 @@ macro(smtg_setup_platform_toolset)
             add_compile_options($<$<CONFIG:Release>:/EHa>)  # Enable C++ Exceptions
             add_compile_options($<$<CONFIG:Release>:/Oy>)   # Omit Frame Pointers
             #add_compile_options($<$<CONFIG:Release>:/Ox>)  # Optimization (/O2: Maximise Speed /0x: Full Optimization)
-            add_compile_options(/MP)                        # Multi-processor Compilation
+            if (NOT (${CMAKE_CXX_COMPILER_ID} STREQUAL "IntelLLVM"))
+                add_compile_options(/MP)                        # Multi-processor Compilation
+            endif ()
             add_compile_options(/wd6031)                    # Return value ignored
             add_compile_options(/wd6308)                    # Realloc may return null pointer
             add_compile_options(/wd6330)                    # Incorrect type passed as parameter in call to function
